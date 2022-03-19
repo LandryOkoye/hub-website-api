@@ -1,4 +1,4 @@
-# 360-app-server
+# The Company Website API
 
 The backend for the blockchainhubafrica API <br><br>
 Live documentation: ✌<br>
