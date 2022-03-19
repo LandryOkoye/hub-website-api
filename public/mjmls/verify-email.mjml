@@ -1,0 +1,44 @@
+<mjml>
+  <mj-head>
+    <mj-style>
+
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#FFFFFF">
+    <mj-section padding-bottom="0px">
+      <mj-column>
+        <mj-image align="left" width="87px" height="24px" src="https://res.cloudinary.com/davien21/image/upload/v1632571063/E-com-360/logo_hbrlmk.png"></mj-image>
+
+        <mj-text align="left" font-weight="bold" padding-top="60px" font-size="30px" font-family="helvetica">Verify your email</mj-text>
+
+      </mj-column>
+    </mj-section>
+    <mj-section padding-top="20px">
+      <mj-column>
+
+
+        <mj-text font-weight="550" padding-top="20px" font-size="16px" font-family="helvetica">Welcome {{name}}.</mj-text>
+
+        <mj-text line-height="25px" font-weight="500" padding-top="20px" font-size="16px" font-family="helvetica">In order to continue your registration, use the verification code
+          below to verify your email.</mj-text>
+
+        <mj-text font-weight="550" padding-top="20px" font-size="24px" font-family="helvetica">{{token}}</mj-text>
+        <mj-spacer></mj-spacer>
+        <mj-spacer></mj-spacer>
+        <mj-spacer></mj-spacer>
+        <mj-spacer></mj-spacer>
+        <mj-spacer></mj-spacer>
+      </mj-column>
+      <mj-column>
+        <mj-image align="left" width="203px" height="205px" css-class="header-img" src="https://res.cloudinary.com/davien21/image/upload/v1632571064/E-com-360/email-img-1_dvwcro.png"></mj-image>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#1B8908">
+      <mj-column padding="20px">
+        <mj-text color="#fff" font-size="16px" font-family="arial" line-height="25px">
+          {{year}} {{APP_NAME}}. All rights reserved. {{OFFICE_ADDRESS}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
