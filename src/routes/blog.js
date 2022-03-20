@@ -9,12 +9,12 @@ const validateById = require("../middlewares/validateById");
 
 module.exports = function () {
   // router.post("/blog/", authenticate, BlogController.create);
-  router.get("/blog", authenticate, BlogController.getAllBlogItems);
+  router.get("/blog", authenticate, BlogController.getAllBlogPosts);
 
   router.get(
     "/blog/:id",
     [authenticate, validateById()],
-    BlogController.getBlogItem
+    BlogController.getBlogPost
   );
 
   router.post(

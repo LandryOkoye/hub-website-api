@@ -23,14 +23,14 @@ class BlogController {
     res.send(response("Blog uploaded successfully"));
   }
 
-  async getBlogItem(req, res) {
+  async getBlogPost(req, res) {
     const blog = await blogService.findById(req.params.id);
     if (!blog) throw new NotFoundError("Invalid Blog Item");
 
     res.send(response("Blog Post returned successfully", blog));
   }
 
-  async getAllBlogItems(req, res) {
+  async getAllBlogPosts(req, res) {
     const blog = await blogService.getAllBlog();
 
     res.send(response("Blog Posts returned successfully", blog));
