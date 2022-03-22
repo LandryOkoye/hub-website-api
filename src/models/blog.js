@@ -33,6 +33,11 @@ const blogSchema = mongoose.Schema(
       trim: true,
     },
     altText: { type: String, default: "" },
+    type: {
+      type: String,
+      enum: ["Casual", "Popular", "Latest"],
+      required: true,
+    },
     url: { type: String, required: true },
     public_id: { type: String, required: true },
     status: {
@@ -71,5 +76,6 @@ blogSchema.pre(["save", "findOneAndUpdate"], async function (next) {
     next(error);
   }
 });
+
 
 module.exports = mongoose.model("blog", blogSchema);

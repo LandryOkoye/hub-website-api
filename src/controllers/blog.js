@@ -8,6 +8,7 @@ const {
 
 const blogService = require("../services/blog");
 const { uploadToCloud, deleteFromCloud } = require("../lib/cloudinary");
+const getArticleType = require("../utils/getArticleType");
 
 class BlogController {
   async create(req, res) {
@@ -28,6 +29,13 @@ class BlogController {
     if (!blog) throw new NotFoundError("Invalid Blog Item");
 
     res.send(response("Blog Post returned successfully", blog));
+  }
+
+  async addBlogPostView(req, res) {
+    const blog = await blogService.addNewView(req.params.id);
+    if (!blog) throw new NotFoundError("Invalid Blog Item");
+
+    res.send(response("Blog Post updated successfully"));
   }
 
   async getAllBlogPosts(req, res) {

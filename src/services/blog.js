@@ -1,16 +1,41 @@
 const Blog = require("../models/blog");
+const getArticleType = require("../utils/getArticleType");
 
 class BlogService {
-  getAllBlog() {
-    return Blog.find().select("-__v -public_id").sort({ publishDate: "desc" });
+  async getAllBlog() {
+    let blog = await Blog.find()
+      .select("-__v -public_id")
+      .sort({ publishDate: "desc" });
+    blog.map((article) => {
+      const lastDate = blog[0].publishDate;
+      article.type = getArticleType(article, article.noOfViews, lastDate);
+    });
+    return blog;
   }
 
   create(blog) {
     return Blog.create(blog);
   }
 
-  findById(id) {
-    return Blog.findById(id);
+  addNewView(id) {
+    return Blog.findByIdAndUpdate(
+      id,
+      {
+        $inc: { noOfViews: 1 },
+      },
+      { new: true }
+    );
+  }
+
+  async findById(id) {
+    let blog = await Blog.find()
+      .select("-__v -public_id")
+      .sort({ publishDate: "desc" });
+    blog.map((article) => {
+      const lastDate = blog[0].publishDate;
+      article.type = getArticleType(article, article.noOfViews, lastDate);
+    });
+    return blog.find((x) => x.id === id);
   }
 
   update(id, updateQuery) {

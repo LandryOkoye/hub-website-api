@@ -9,7 +9,7 @@ const authenticate = require("../middlewares/user-auth");
 
 module.exports = function () {
   router.use("/all", authenticate, async (req, res) => {
-    const media = await MediaService.getAllMediaResources();
+    // const media = await MediaService.getAllMediaResources();
     const blog = await BlogService.getAllBlog();
     const users = await UsersService.getAllUsers();
 
@@ -22,7 +22,7 @@ module.exports = function () {
 
     res.send(
       response("All Data retrieved successfully", {
-        media,
+        // media,
         blog,
         users,
         currentUser: user,
@@ -31,12 +31,12 @@ module.exports = function () {
   });
 
   router.use("/insights", async (req, res) => {
-    const media = await MediaService.getAllMediaResources();
+    // const media = await MediaService.getAllMediaResources();
     const blog = await BlogService.getAllBlog();
 
     res.send(
       response("All Data retrieved successfully", {
-        media,
+        // media,
         blog,
       })
     );

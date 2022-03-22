@@ -13,9 +13,11 @@ module.exports = function () {
 
   router.get(
     "/blog/:id",
-    [authenticate, validateById()],
+    [validateById()],
     BlogController.getBlogPost
   );
+
+  router.post("/blog/:id", [validateById()], BlogController.addBlogPostView);
 
   router.post(
     "/blog",
