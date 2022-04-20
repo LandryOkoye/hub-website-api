@@ -68,7 +68,7 @@ blogSchema.pre(["save", "findOneAndUpdate"], async function (next) {
   if (!data.title) next();
 
   try {
-    data.slug = slugify(data.title) + "-" + random();
+    if (data.title) data.slug = slugify(data.title) + "-" + random();
 
     next();
   } catch (error) {
