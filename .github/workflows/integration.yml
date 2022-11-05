@@ -3,13 +3,13 @@ name: Continuous Integration
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   merge_pull_request:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main branch
+      - name: Checkout master branch
         uses: actions/checkout@v2
 
       - name: Use Node.js
@@ -18,10 +18,10 @@ jobs:
           node-version: "14.x"
 
       - name: Install dependencies
-        run: yarn ci
+        run: npm ci
 
       - name: Test application
-        run: yarn test
+        run: npm test
 
       - name: Build application
-        run: yarn build
+        run: npm run build
