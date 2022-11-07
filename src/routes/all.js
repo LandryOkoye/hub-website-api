@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const response = require("../utils/response");
 
-const MediaService = require("../services/media");
+const EventService = require("../services/event");
+const RegistrationService = require("../services/registration");
 const BlogService = require("../services/blog");
 const UsersService = require("../services/user");
 
@@ -9,7 +10,7 @@ const authenticate = require("../middlewares/user-auth");
 
 module.exports = function () {
   router.use("/all", authenticate, async (req, res) => {
-    // const media = await MediaService.getAllMediaResources();
+    const events = await EventService.getAllEvents();
     const blog = await BlogService.getAllBlog();
     const users = await UsersService.getAllUsers();
 
@@ -22,7 +23,7 @@ module.exports = function () {
 
     res.send(
       response("All Data retrieved successfully", {
-        // media,
+        events,
         blog,
         users,
         currentUser: user,

@@ -1,3 +1,5 @@
+const crypto = require("crypto");
+
 const random = () => {
   let range = Array.from(Array(10).keys());
   let token = "";
@@ -8,4 +10,8 @@ const random = () => {
   return token;
 };
 
-module.exports = random;
+const getRandomKey = (length = 7) => {
+  return crypto.randomBytes(length).toString("hex");
+};
+
+module.exports = { random, getRandomKey };
