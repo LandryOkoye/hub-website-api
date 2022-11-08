@@ -1,5 +1,7 @@
 const response = require("../utils/response");
 const { generateAuthToken } = require("../utils/token");
+const { getRandomKey } = require("../utils/random");
+
 
 const {
   NotFoundError,
@@ -19,6 +21,7 @@ class RegistrationController {
     if (existingRegistration)
       throw new DuplicateError("User has already registered");
 
+    req.body.paymentId = getRandomKey(7);
     await registrationService.create(req.body);
     res.send(response("Event Registration created successfully"));
   }

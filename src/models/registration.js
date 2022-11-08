@@ -30,6 +30,10 @@ const registrationsSchema = mongoose.Schema(
       amount: { type: String },
       hasPaid: { type: Boolean, default: false },
     },
+    paymentId: {
+      type: String,
+      required: true
+    },
     ticket: {
       type: String,
       enum: ["Regular", "Vip"],
