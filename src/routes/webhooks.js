@@ -23,18 +23,16 @@ const getFlutterwaveWebhook = (req) => {
 
 module.exports = function () {
   router.post("/webhooks/flutterwave", async (req, res) => {
-    console.log("REQUEST:\n", req);
     const payload = getFlutterwaveWebhook(req);
 
     //check if the payment exist in the flutterwave database
     const validPayment = await flw.Transaction.verify({ id: payload.data.id });
+    console.log("Valid Payment", validPayment);
     if (
-      !validPayment?.data ||
       validPayment.data.status !== "successful" ||
       validPayment.data.currency !== "NGN"
     )
       throw new BadRequestError("Invalid Payment");
-    console.log("Valid Payment", validPayment);
 
     const validRegistration = await registrationService.findAndUpdate(
       {
