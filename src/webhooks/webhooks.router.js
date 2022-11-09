@@ -10,6 +10,8 @@ const Flutterwave = require("flutterwave-node-v3");
 const flw = new Flutterwave(process.env.FLW_PUBLIC, process.env.FLW_SECRET);
 
 const getFlutterwaveWebhook = (req) => {
+  console.log("FLW Webhook", req.body);
+
   // If you specified a secret hash, check for the signature
   const secretHash = process.env.FLW_SECRET_HASH;
   const signature = req.headers["verif-hash"];
@@ -17,7 +19,6 @@ const getFlutterwaveWebhook = (req) => {
     throw new UnAuthorizedError("Invalid signature");
 
   fs.writeFileSync("flw-webhook.json", JSON.stringify(req.body));
-
   return req.body;
 };
 
@@ -26,6 +27,7 @@ router.post("/webhooks/flutterwave", async (req, res) => {
 
   //check if the payment exist in the flutterwave database
   const validPayment = await flw.Transaction.verify({ id: payload.data.id });
+  console.log("Valid Payment", validPayment);
   if (
     !validPayment?.data ||
     validPayment.data.status !== "successful" ||
@@ -40,6 +42,7 @@ router.post("/webhooks/flutterwave", async (req, res) => {
     },
     { transaction: { hasPaid: true } }
   );
+  console.log("Valid Registration", validRegistration);
 
   if (!validRegistration) throw new BadRequestError("Invalid Registration");
 
