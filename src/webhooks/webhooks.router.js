@@ -1,65 +1,49 @@
 const router = require("express").Router();
 
-import transactionsService from "../../modules/transactions/transactions.service";
 import response from "../../utils/response";
 import { UnAuthorizedError } from "../../config/errors";
 import fs from "fs";
-import registrationController from "../controllers/registration";
-import Registration from "../models/registration";
-const Flutterwave = require('flutterwave-node-v3');
+import registrationService from "../services/registration";
+import { BadRequestError } from "../lib/errors";
+
+const Flutterwave = require("flutterwave-node-v3");
 const flw = new Flutterwave(process.env.FLW_PUBLIC, process.env.FLW_SECRET);
 
-
-
-const getFlutterwaveWebhook = async (req, res) => {
+const getFlutterwaveWebhook = (req) => {
   // If you specified a secret hash, check for the signature
   const secretHash = process.env.FLW_SECRET_HASH;
   const signature = req.headers["verif-hash"];
-  if (!signature || signature !== secretHash) {
+  if (!signature || signature !== secretHash)
     throw new UnAuthorizedError("Invalid signature");
-    res.status(401).end();
-  }
 
-  const payload = req.body;
-  const transactionId = payload.data.id; 
+  fs.writeFileSync("flw-webhook.json", JSON.stringify(req.body));
 
-  //check if the payment exist in the flutterwave database
-  const checkPayment = await flw.Transaction.verify({ id: transactionId })
-  if (checkPayment.data === null || !checkPayment)
-    throw new UnAuthorizedError('Your Payment was not found, kindly contact support if your bank payment was successful');
-
-  const checkRegistration = await Registration.findOne({ paymentId: checkPayment.data.tx_ref });
-  if (!checkRegistration)
-    throw new UnAuthorizedError('Your Transaction was not found, kindly contact support if your bank payment was success');
-
-  if (
-    checkPayment.data.status === "successful"
-    && checkPayment.data.amount >= + checkRegistration.transaction.amount
-    && checkPayment.data.currency === "NGN"
-  ) {
-
-    //update the registration model
-    const updateRegistration = await Registration.findByIdAndUpdate(checkRegistration._id, {
-      transaction: {
-        hasPaid: true
-      }
-    }, { new: true });
-    
-    if (!updateRegistration) throw new UnAuthorizedError('Registration payment was not updated successfully, kindly contact support');
-
-  }
-
-  
-
-  return updateRegistration;
+  return req.body;
 };
 
 router.post("/webhooks/flutterwave", async (req, res) => {
-  const data = getFlutterwaveWebhook(req);
-  if (!data) throw new UnAuthorizedError("Cannot access link");
-  
- 
-  res.send(response("transaction complete", result));
+  const payload = await getFlutterwaveWebhook(req);
+
+  //check if the payment exist in the flutterwave database
+  const validPayment = await flw.Transaction.verify({ id: payload.data.id });
+  if (
+    !validPayment?.data ||
+    validPayment.data.status !== "successful" ||
+    validPayment.data.currency !== "NGN"
+  )
+    throw new BadRequestError("Invalid Payment");
+
+  const validRegistration = await registrationService.findAndUpdate(
+    {
+      paymentId: validPayment.data.tx_ref,
+      "transaction.amount": validPayment.data.amount,
+    },
+    { transaction: { hasPaid: true } }
+  );
+
+  if (!validRegistration) throw new BadRequestError("Invalid Registration");
+
+  res.send(response("Payment Successful"));
 });
 
 export default router;

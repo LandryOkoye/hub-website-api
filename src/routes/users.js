@@ -28,7 +28,7 @@ module.exports = function () {
 
   router.put(
     "/users/:id",
-    [authenticate, validateById(), validateBy(updateUser)],
+    [validateById(), validateBy(updateUser)],
     userController.update
   );
 

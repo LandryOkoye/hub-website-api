@@ -13,10 +13,10 @@ class EventController {
   }
   async update(req, res) {
     const event = await eventService.findById(req.params?.id);
-    if (!event) return res.send(response("Candidate updated successfully"));
+    if (!event) return res.send(response("Event updated successfully"));
 
-    let updatedCandidate = await eventService.update(event.id, req.body);
-    res.send(response("Candidate updated successfully", updatedCandidate));
+    let updatedEvent = await eventService.update(event.id, req.body);
+    res.send(response("Event updated successfully", updatedEvent));
   }
 }
 

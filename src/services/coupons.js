@@ -17,6 +17,10 @@ class CouponService {
     return Coupon.find({ event: eventId });
   }
 
+  findByCode(eventId, couponCode) {
+    return Coupon.findOne({ event: eventId, couponCode });
+  }
+
   update(id, updateQuery) {
     return Coupon.findByIdAndUpdate(id, updateQuery, { new: true });
   }

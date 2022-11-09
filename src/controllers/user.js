@@ -63,7 +63,6 @@ class UserController {
   async update(req, res) {
     const user = await userService.findById(req.params?.id);
     if (!user) return res.send(response("User updated successfully"));
-
     let updatedUser = await userService.update(user.id, req.body);
     updatedUser = omit(updatedUser._doc, ["password", "__v"]);
     res.send(response("User updated successfully", updatedUser));

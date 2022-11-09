@@ -27,16 +27,16 @@ const registrationsSchema = mongoose.Schema(
     },
     event: { type: mongoose.Schema.Types.ObjectId, ref: "event" },
     transaction: {
-      amount: { type: String },
+      amount: { type: String, default: 0 },
       hasPaid: { type: Boolean, default: false },
-    },
-    paymentId: {
-      type: String,
-      required: true
+      paymentId: {
+        type: String,
+        required: true,
+      },
     },
     ticket: {
       type: String,
-      enum: ["Regular", "Vip"],
+      enum: ["Regular", "VIP"],
       required: true,
     },
   },

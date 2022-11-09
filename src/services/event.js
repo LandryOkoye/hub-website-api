@@ -13,6 +13,10 @@ class EventService {
     return Event.findById(id);
   }
 
+  findByEventCode = (eventCode) => {
+    return Event.findOne({ eventCode });
+  };
+
   update(id, updateQuery) {
     return Event.findByIdAndUpdate(id, updateQuery, { new: true });
   }

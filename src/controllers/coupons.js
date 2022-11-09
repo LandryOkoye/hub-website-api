@@ -21,7 +21,11 @@ class CouponsController {
     if (!event) return res.send(response("Invalid Event"));
 
     const couponCode = getRandomKey(4).toUpperCase();
-    await couponService.create({ event: req.body.eventId, couponCode });
+    await couponService.create({
+      event: req.body.eventId,
+      couponCode,
+      ticket: req.body.ticket,
+    });
     const coupons = await couponService.findByEvent(req.body.eventId);
 
     res.send(response("Coupon was created successfully", coupons));

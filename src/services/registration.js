@@ -9,8 +9,8 @@ class RegistrationService {
     return Registration.create(registration);
   }
 
-  findByEvent(email, eventName) {
-    return Registration.findOne({ email, eventName });
+  findByEvent(eventId, email) {
+    return Registration.findOne({ email, event: eventId });
   }
 
   findById(id) {
@@ -20,6 +20,12 @@ class RegistrationService {
   update(id, updateQuery) {
     return Registration.findByIdAndUpdate(id, updateQuery, { new: true });
   }
+
+  findAndUpdate = async (filter, updateQuery) => {
+    return Registration.findOneAndUpdate(filter, updateQuery, {
+      new: true,
+    });
+  };
 
   delete(id) {
     return Registration.findByIdAndDelete(id);

@@ -14,6 +14,11 @@ const couponSchema = mongoose.Schema(
       ref: "event",
       required: true,
     },
+    ticket: {
+      type: String,
+      enum: ["Regular", "VIP"],
+      required: true,
+    },
   },
   {
     timestamps: true,
