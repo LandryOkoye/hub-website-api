@@ -25,7 +25,7 @@ class RegistrationService {
     return Registration.findByIdAndUpdate(id, updateQuery, { new: true });
   }
 
-  findAndUpdate = async (filter, updateQuery) => {
+findOneAndUpdate = async (filter, updateQuery) => {
     return Registration.findOneAndUpdate(filter, updateQuery, {
       new: true,
     });

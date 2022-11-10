@@ -30,6 +30,7 @@ class RegistrationController {
         );
       }
 
+      await couponService.delete(coupon.id);
       transaction.hasPaid = true;
     }
     req.body.transaction = transaction;

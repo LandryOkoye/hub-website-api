@@ -21,7 +21,7 @@ class EventController {
   }
   async getEventRegistrations(req, res) {
     const registrations = await registrationService.findEventRegistrations(
-      req.params.eventId
+      req.params.id
     );
 
     res.send(

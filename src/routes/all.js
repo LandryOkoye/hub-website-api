@@ -24,7 +24,6 @@ module.exports = function () {
     res.send(
       response("All Data retrieved successfully", {
         events,
-        registrations,
         blog,
         users,
         currentUser: user,

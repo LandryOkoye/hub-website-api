@@ -27,6 +27,7 @@ module.exports = function () {
 
     //check if the payment exist in the flutterwave database
     const validPayment = await flw.Transaction.verify({ id: payload.data.id });
+
     console.log("Valid Payment", validPayment);
     if (
       validPayment.data.status !== "successful" ||
@@ -34,22 +35,19 @@ module.exports = function () {
     )
       throw new BadRequestError("Invalid Payment");
 
-    const validRegistration = await registrationService.findAndUpdate(
+    const validRegistration = await registrationService.findOneAndUpdate(
       {
-        paymentId: validPayment.data.tx_ref,
+        "transaction.paymentId": validPayment.data.tx_ref,
         "transaction.amount": validPayment.data.amount.toString(),
       },
       { transaction: { hasPaid: true } }
     );
-    console.log("Valid Registration", validRegistration.transaction);
-
-    console.log("Tx Amount", validPayment.data.amount.toString());
+    console.log("Valid Registration", validRegistration);
 
     if (!validRegistration) throw new BadRequestError("Invalid Registration");
 
     res.send(response("Payment Successful"));
   });
-  
 
   return router;
 };
