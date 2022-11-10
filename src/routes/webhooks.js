@@ -41,7 +41,9 @@ module.exports = function () {
       },
       { transaction: { hasPaid: true } }
     );
-    console.log("Valid Registration", validRegistration);
+    console.log("Valid Registration", validRegistration.transaction);
+
+    console.log("Tx Amount", validPayment.data.amount.toString());
 
     if (!validRegistration) throw new BadRequestError("Invalid Registration");
 

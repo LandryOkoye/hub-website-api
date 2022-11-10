@@ -13,6 +13,10 @@ class RegistrationService {
     return Registration.findOne({ email, event: eventId });
   }
 
+  findEventRegistrations(eventId) {
+    return Registration.find({ event: eventId });
+  }
+
   findById(id) {
     return Registration.findById(id);
   }

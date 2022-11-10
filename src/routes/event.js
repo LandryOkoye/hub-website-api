@@ -12,6 +12,10 @@ const {
 
 module.exports = function () {
   router.get("/events/", eventController.getAll);
+  router.get(
+    "/events/registrations/:id",
+    eventController.getEventRegistrations
+  );
 
   router.post(
     "/events/",

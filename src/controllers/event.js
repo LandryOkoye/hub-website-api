@@ -1,6 +1,7 @@
 const response = require("../utils/response");
 
 const eventService = require("../services/event");
+const registrationService = require("../services/registration");
 
 class EventController {
   async getAll(req, res) {
@@ -17,6 +18,15 @@ class EventController {
 
     let updatedEvent = await eventService.update(event.id, req.body);
     res.send(response("Event updated successfully", updatedEvent));
+  }
+  async getEventRegistrations(req, res) {
+    const registrations = await registrationService.findEventRegistrations(
+      req.params.eventId
+    );
+
+    res.send(
+      response("Event Registrations retrieved successfully", registrations)
+    );
   }
 }
 
