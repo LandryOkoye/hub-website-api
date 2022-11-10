@@ -37,7 +37,7 @@ module.exports = function () {
     const validRegistration = await registrationService.findAndUpdate(
       {
         paymentId: validPayment.data.tx_ref,
-        "transaction.amount": validPayment.data.amount,
+        "transaction.amount": validPayment.data.amount.toString(),
       },
       { transaction: { hasPaid: true } }
     );
@@ -47,6 +47,7 @@ module.exports = function () {
 
     res.send(response("Payment Successful"));
   });
+  
 
   return router;
 };
