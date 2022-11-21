@@ -16,10 +16,11 @@ class RegistrationController {
     req.body.event = event._id;
 
     const paymentId = event.eventCode + getRandomKey(5);
-    const transaction = { amount: 1000, hasPaid: false, paymentId };
+    const transaction = { amount: 0, hasPaid: false, paymentId };
 
     if (req.body.ticket === "VIP") transaction.amount = 5000;
-
+    if (req.body.ticket === "Regular") transaction.hasPaid = true;
+    
     const couponCode = req.body?.couponCode;
     if (couponCode) {
       const coupon = await couponService.findByCode(event.id, couponCode);
