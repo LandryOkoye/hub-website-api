@@ -2,13 +2,13 @@ require("express-async-errors");
 const express = require("express");
 const app = express();
 
-const env = require("./src/config/env");
-const logger = require("./src/config/logger");
+const env = require("./config/env");
+const logger = require("./config/logger");
 
-require("./src/config/db")();
-require("./src/config/routing")(app);
+require("./config/db")();
+require("./config/routing")(app);
 
-const PORT = env.PORT;
+const PORT = env.PORT || 3411;
 const mode = env.NODE_ENV;
 
 app.listen(PORT, () => {
