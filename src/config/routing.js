@@ -6,7 +6,7 @@ const cors = require("cors");
 const { NotFoundError } = require("../lib/errors");
 const errorMiddleware = require("../middlewares/error");
 const router = express.Router();
-const routes = require("../routes/index")(router);
+const routes = require("./routes")(router);
 
 module.exports = (app) => {
   app.use(compression());

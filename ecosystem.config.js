@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "blockchainhubafrica-api",
-      script: "app.js",
+      script: "src/index.js",
       instances: "max",
       env: {
         NODE_ENV: "development",
