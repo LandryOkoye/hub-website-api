@@ -2,7 +2,7 @@
   "name": "blockchainhubafrica",
   "version": "1.0.0",
   "description": "blockchainhubafrica API",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",

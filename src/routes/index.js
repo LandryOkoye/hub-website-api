@@ -1,21 +1,31 @@
-const router = require("express").Router();
-const userRouter = require("./users");
-const candidateRouter = require("./candidates");
-const blogRouter = require("./blog");
-const webhookRouter = require("./webhooks");
-const allDataRouter = require("./all");
-const registrationsRouter = require("./registrations");
-const eventRouter = require("./event");
-const couponsRouter = require("./coupons");
+const express = require("express");
+const morgan = require("morgan");
+const compression = require("compression");
+const cors = require("cors");
 
-module.exports = () => {
-  router.use(userRouter());
-  router.use(candidateRouter());
-  router.use(blogRouter());
-  router.use(webhookRouter());
-  router.use(allDataRouter());
-  router.use(registrationsRouter());
-  router.use(eventRouter());
-  router.use(couponsRouter());
-  return router;
+const { NotFoundError } = require("../lib/errors");
+const errorMiddleware = require("../middlewares/error");
+const routes = require("./routes");
+
+module.exports = (app) => {
+  app.use(compression());
+  app.use(morgan("dev"));
+
+  app.use(express.static("public"));
+  app.use("/api/v1/static", express.static("uploads"));
+  app.use(express.json({ limit: "1mb", type: "application/json" }));
+  app.use(express.urlencoded({ extended: false }));
+
+  app.use(cors());
+
+  app.use("/ping", (req, res) => res.send(`Live`));
+  app.use("/api/v1", routes);
+
+  app.use((req, res, next) => {
+    next(new NotFoundError());
+  });
+
+  app.use(errorMiddleware);
+
+  return app;
 };
