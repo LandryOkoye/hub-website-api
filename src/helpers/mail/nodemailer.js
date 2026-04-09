@@ -1,6 +1,6 @@
 const { EMAIL_FROM, EMAIL_NAME } = process.env;
 
-export const send = async (to, subject, text, html, from, fromName) => {
+const send = async (to, subject, text, html, from, fromName) => {
   try {
     throw new Error("Yet to be Implemented");
     return true;
@@ -8,3 +8,5 @@ export const send = async (to, subject, text, html, from, fromName) => {
     return false;
   }
 };
+
+module.exports = { send };

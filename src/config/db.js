@@ -6,12 +6,7 @@ const db = env.DB_URI;
 
 module.exports = () => {
   mongoose
-    .connect(db, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true,
-    })
+    .connect(db)
     .then(() => {
       logger.info(`Connected to ${db}`);
     })

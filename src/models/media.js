@@ -20,9 +20,11 @@ const mediaResourceSchema = mongoose.Schema(
     toObject: {
 			getters: true,
 			transform: function (doc, ret, game) {
-        const startIndex = file.filename.lastIndexOf("\/uploads") + 1;
-        const type = file.filename.slice(startIndex);
-        console.log(type)
+        if (doc.filename) {
+          const startIndex = doc.filename.lastIndexOf("\/uploads") + 1;
+          const type = doc.filename.slice(startIndex);
+          // console.log(type)
+        }
 				delete ret.__v;
 				return ret;
 			},

@@ -9,12 +9,7 @@ const db = env.DB_URI;
 const seedBlogs = async () => {
   try {
     // Connect to MongoDB
-    await mongoose.connect(db, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true,
-    });
+    await mongoose.connect(db);
     console.log("✅ Connected to database");
 
     // Clear existing blogs
