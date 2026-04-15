@@ -1,43 +1,48 @@
 const mongoose = require("mongoose");
 
-const registrationsSchema = mongoose.Schema(
+const registrationSchema = new mongoose.Schema(
   {
+    reg_id: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      uppercase: true,
+    },
+    event_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "event",
+      required: true,
+    },
+    event_name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    // ── Registrant details ──
+
     name: {
       type: String,
+      required: true,
+      trim: true,
       minlength: 2,
       maxlength: 255,
-      trim: true,
-      required: true,
     },
     email: {
       type: String,
       required: true,
-      unique: true,
-      minlength: 5,
-      maxlength: 255,
       trim: true,
+      lowercase: true,
     },
     phone: {
       type: String,
       required: true,
+      trim: true,
     },
-    couponCode: {
-      type: String,
-      default: null,
-    },
-    event: { type: mongoose.Schema.Types.ObjectId, ref: "event" },
-    transaction: {
-      amount: { type: String, default: 0 },
-      hasPaid: { type: Boolean, default: false },
-      paymentId: {
-        type: String,
-        required: true,
-      },
-    },
-    ticket: {
-      type: String,
-      enum: ["Regular", "VIP"],
-      required: true,
+    responses: {
+      type: mongoose.Schema.Types.Mixed,
+      default: {},
     },
   },
   {
@@ -45,4 +50,8 @@ const registrationsSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("registrations", registrationsSchema);
+registrationSchema.index({ event_id: 1, email: 1 }, { unique: true });
+
+registrationSchema.index({ event_id: 1 });
+
+module.exports = mongoose.model("registrations", registrationSchema);

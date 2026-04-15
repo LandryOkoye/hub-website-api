@@ -29,7 +29,7 @@ class BlogService {
 
   async findById(id) {
     let blog = await Blog.find()
-      .select("-__v -public_id")
+      .select("-__v")
       .sort({ publishDate: "desc" });
     blog.map((article) => {
       const lastDate = blog[0].publishDate;

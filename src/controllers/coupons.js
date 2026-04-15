@@ -17,7 +17,7 @@ class CouponsController {
   }
 
   async create(req, res) {
-    const event = await eventService.findById(req.body.eventId);
+    const event = await eventService.getEventById(req.body.eventId, false);
     if (!event) return res.send(response("Invalid Event"));
 
     const couponCode = getRandomKey(4).toUpperCase();
@@ -39,7 +39,7 @@ class CouponsController {
   }
 
   async delete(req, res) {
-    await couponService.delete(coupon.id);
+    await couponService.delete(req.params.id);
     res.send(response("Coupon deleted successfully"));
   }
 }

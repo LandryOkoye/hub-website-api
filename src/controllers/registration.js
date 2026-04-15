@@ -20,7 +20,7 @@ class RegistrationController {
 
     if (req.body.ticket === "VIP") transaction.amount = 5000;
     if (req.body.ticket === "Regular") transaction.hasPaid = true;
-    
+
     const couponCode = req.body?.couponCode;
     if (couponCode) {
       const coupon = await couponService.findByCode(event.id, couponCode);

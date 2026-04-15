@@ -12,9 +12,9 @@ module.exports = () => {
   router.use(userRouter());
   router.use(candidateRouter());
   router.use(blogRouter());
-  router.use(webhookRouter());
+  // router.use(webhookRouter()); // Obsolete route deregistered due to schema refactor
   router.use(allDataRouter());
-  router.use(registrationsRouter());
+  // router.use(registrationsRouter()); // Obsolete route deregistered due to schema refactor
   router.use(eventRouter());
   router.use(couponsRouter());
   return router;

@@ -4,7 +4,7 @@ const env = process.env.NODE_ENV || "development";
 //common environmental variables for all environments
 const common = {
   APP_NAME: process.env.APP_NAME || "blockchainhubafrica",
-  OFFICE_ADDRESS: process.env.OFFICE_ADDRESS,
+  OFFICE_ADDRESS: process.env.OFFICE_ADDRESS || "123 anytown Enugu",
   EMAILER: process.env.EMAILER,
   BASE_URL: process.env.BASE_URL,
   NODEMAILER_CONFIG: {
@@ -36,7 +36,8 @@ const common = {
 
 const development = {
   NODE_ENV: "development",
-  DB_URI: `mongodb://localhost:27017/${common.APP_NAME}`,
+  DB_URI: process.env.DB_URI || `mongodb://localhost:27017/${common.APP_NAME}`,
+  // DB_URI: process.env.DB_URI,
   ...common,
 };
 

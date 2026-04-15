@@ -27,6 +27,23 @@ const userSchema = mongoose.Schema(
       trim: true,
       required: true,
     },
+
+    // = = = = = = = = = = = = =  
+    // Mongodb user model updated to include  a "role " field
+
+    // HOW ADMIN ACCESS WORKS:
+    //   1. A user account is created normally via POST /api/v1/users
+    //   2. You manually set their role to "admin" in MongoDB:
+    //        db.users.updateOne({ email: "admin@example.com" }, { $set: { role: "admin" } })
+    //      OR use the provided script:  node scripts/make-admin.js admin@example.com
+    //   3. When they log in, the JWT token is generated with their role included
+    //   4. The requireAdmin middleware checks the role from the decoded JWT
+
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    }
   },
   {
     timestamps: true,
