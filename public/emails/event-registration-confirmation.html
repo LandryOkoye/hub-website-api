@@ -1,0 +1,251 @@
+<!-- public/emails/event-registration-confirmation.html -->
+<!--
+  Event Registration Confirmation Email Template
+  
+  PLACEMENT: Create this file at public/emails/event-registration-confirmation.html
+  
+  This is a Handlebars template. The double-brace {{ }} syntax marks
+  variables that get replaced with real data when the email is sent.
+  The template is compiled ONCE at server startup by src/lib/emails.js
+  and reused for every registration email.
+  
+  VARIABLES AVAILABLE:
+    {{ registrant_name }}  - Full name of the registrant
+    {{ event_name }}       - Name of the event
+    {{ event_location }}   - Venue / location string
+    {{ event_date }}       - Formatted start date  e.g. "Wednesday, June 10, 2026"
+    {{ event_time }}       - Formatted time range  e.g. "9:00 AM – 5:00 PM (WAT)"
+    {{ reg_id }}           - Registration ID       e.g. "REG-A3F9KL"
+    {{ year }}             - Current year (for footer copyright)
+    {{ APP_NAME }}         - App name from env
+    {{ OFFICE_ADDRESS }}   - Office address from env
+    {{#if has_responses}}  - Conditional block: only renders if there are custom field answers
+    {{ responses }}        - Array of { label, answer } for the custom field section
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Registration Confirmed</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            font-family: helvetica, arial, sans-serif;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            border-collapse: collapse;
+        }
+
+        img {
+            border: 0;
+            height: auto;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .email-card {
+                width: 100% !important;
+            }
+
+            .email-padding {
+                padding: 24px 16px !important;
+            }
+        }
+    </style>
+</head>
+
+<body style="background-color:#f4f4f4; margin:0; padding:0;">
+
+    <!-- Outer table centers the email card -->
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="center" style="padding: 32px 16px;">
+
+                <!-- Email card — max 600px wide, white background, rounded corners -->
+                <table class="email-card" width="600" cellpadding="0" cellspacing="0"
+                    style="background:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+
+                    <!-- ═══ HEADER ═══ -->
+                    <tr>
+                        <td style="background-color:#1B8908; padding:28px 40px;">
+                            <p style="color:#ffffff; font-size:20px; font-weight:bold; margin:0; letter-spacing:0.5px;">
+                                {{ APP_NAME }}
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- ═══ SUCCESS BADGE + GREETING ═══ -->
+                    <tr>
+                        <td class="email-padding" style="padding:40px 40px 24px; text-align:center;">
+                            <!-- Checkmark circle -->
+                            <div
+                                style="display:inline-block; width:64px; height:64px; background-color:#e6f4e6; border-radius:50%; line-height:64px; font-size:30px; margin-bottom:20px;">
+
+                            </div>
+                            <h1 style="font-size:26px; font-weight:bold; color:#1a1a1a; margin:0 0 10px;">
+                                You're registered!
+                            </h1>
+                            <p style="font-size:16px; color:#555555; line-height:1.6;">
+                                Hi <strong>{{ registrant_name }}</strong>, your spot has been confirmed.
+                                Here are your registration details — save this email for your records.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- ═══ REGISTRATION ID BOX ═══ -->
+                    <!-- This is the most important piece of info — make it prominent.
+                 The admin will ask for this ID at the event entrance. -->
+                    <tr>
+                        <td style="padding:0 40px 32px;">
+                            <table width="100%" cellpadding="0" cellspacing="0"
+                                style="background-color:#f0f9ee; border:2px dashed #1B8908; border-radius:8px;">
+                                <tr>
+                                    <td style="padding:20px; text-align:center;">
+                                        <p
+                                            style="font-size:11px; font-weight:700; color:#1B8908; text-transform:uppercase; letter-spacing:1.5px; margin:0 0 8px;">
+                                            Your Registration ID
+                                        </p>
+                                        <!-- Monospace font makes the ID easy to read and transcribe -->
+                                        <p
+                                            style="font-size:30px; font-weight:bold; color:#1a1a1a; letter-spacing:4px; margin:0; font-family:'Courier New', Courier, monospace;">
+                                            {{ reg_id }}
+                                        </p>
+                                        <p style="font-size:12px; color:#888888; margin:10px 0 0;">
+                                            Show this ID or present this email at the event entrance
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- ═══ EVENT DETAILS ═══ -->
+                    <tr>
+                        <td class="email-padding" style="padding:0 40px 32px;">
+
+                            <!-- Section heading -->
+                            <p
+                                style="font-size:12px; font-weight:700; color:#1B8908; text-transform:uppercase; letter-spacing:1px; margin:0 0 18px; padding-bottom:8px; border-bottom:2px solid #eeeeee;">
+                                Event Details
+                            </p>
+
+                            <!-- Event Name -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+                                <tr>
+                                    <td width="30" valign="top" style="padding-top:1px; font-size:18px;"></td>
+                                    <td>
+                                        <p
+                                            style="font-size:11px; color:#aaaaaa; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 3px;">
+                                            Event</p>
+                                        <p style="font-size:16px; font-weight:bold; color:#1a1a1a; margin:0;">{{
+                                            event_name }}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Date -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+                                <tr>
+                                    <td width="30" valign="top" style="padding-top:1px; font-size:18px;"></td>
+                                    <td>
+                                        <p
+                                            style="font-size:11px; color:#aaaaaa; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 3px;">
+                                            Date</p>
+                                        <p style="font-size:15px; color:#333333; margin:0;">{{ event_date }}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Time -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+                                <tr>
+                                    <td width="30" valign="top" style="padding-top:1px; font-size:18px;"></td>
+                                    <td>
+                                        <p
+                                            style="font-size:11px; color:#aaaaaa; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 3px;">
+                                            Time</p>
+                                        <p style="font-size:15px; color:#333333; margin:0;">{{ event_time }}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Venue -->
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td width="30" valign="top" style="padding-top:1px; font-size:18px;"></td>
+                                    <td>
+                                        <p
+                                            style="font-size:11px; color:#aaaaaa; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 3px;">
+                                            Venue</p>
+                                        <p style="font-size:15px; color:#333333; margin:0;">{{ event_location }}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+
+                    <!-- ═══ CUSTOM FIELD RESPONSES (conditional) ═══ -->
+                    <!-- This section only renders if the registrant answered custom questions.
+                 Handlebars {{#if}} block — skipped entirely if has_responses is false. -->
+                    {{#if has_responses}}
+                    <tr>
+                        <td class="email-padding" style="padding:0 40px 32px;">
+
+                            <p
+                                style="font-size:12px; font-weight:700; color:#1B8908; text-transform:uppercase; letter-spacing:1px; margin:0 0 18px; padding-bottom:8px; border-bottom:2px solid #eeeeee;">
+                                Your Responses
+                            </p>
+
+                            <!-- Iterate over the responses array: [{ label, answer }] -->
+                            {{#each responses}}
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
+                                <tr>
+                                    <td>
+                                        <!-- Field label (the question) -->
+                                        <p style="font-size:11px; color:#aaaaaa; font-weight:600; margin:0 0 4px;">
+                                            {{ this.label }}
+                                        </p>
+                                        <!-- Answer — left-bordered box for visual grouping -->
+                                        <p
+                                            style="font-size:14px; color:#333333; margin:0; background:#f9f9f9; padding:8px 12px; border-radius:4px; border-left:3px solid #1B8908;">
+                                            {{ this.answer }}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            {{/each}}
+
+                        </td>
+                    </tr>
+                    {{/if}}
+
+                    <!-- ═══ FOOTER ═══ -->
+                    <tr>
+                        <td style="background-color:#1B8908; padding:24px 40px;">
+                            <p style="color:#c8e6c5; font-size:13px; line-height:1.7; margin:0;">
+                                © {{ year }} {{ APP_NAME }}. All rights reserved.<br />
+                                {{ OFFICE_ADDRESS }}
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+                <!-- /email card -->
+
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

@@ -13,15 +13,28 @@ const generateToken = ({ length, range, prefix }) => {
 
 const generateSignUpToken = (token = null) => {
   let range = Array.from(Array(10).keys());
-  let tokenOptions = { length: 5, range, prefix: "SZ-" };
+  let tokenOptions = {
+    length: 5,
+    range,
+    prefix: "SZ-"
+  };
   let newToken = generateToken(tokenOptions);
 
   return newToken;
 };
 
+// Including 'Role' in the jwt payload
+
 const generateAuthToken = (user) => {
-  let dataToSign = { id: user.id, email: user.email };
-  return jwt.sign({ ...dataToSign }, env.JWT_SECRET_KEY, { expiresIn: "24h" });
+  const dataToSign = {
+    id: user.id,
+    email: user.email,
+    role: user.role
+  };
+
+  return jwt.sign({ ...dataToSign },
+    env.JWT_SECRET_KEY,
+    { expiresIn: "24h" });
 };
 
 module.exports = { generateSignUpToken, generateAuthToken };

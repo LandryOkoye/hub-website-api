@@ -3,8 +3,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 class UserService {
+
+  // The getAllUsers function now returns the role of the user
   getAllUsers() {
-    return User.find().select("name email id");
+    return User.find().select("name email id role");
   }
 
   create(user) {
