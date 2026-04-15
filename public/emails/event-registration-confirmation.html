@@ -1,27 +1,3 @@
-<!-- public/emails/event-registration-confirmation.html -->
-<!--
-  Event Registration Confirmation Email Template
-  
-  PLACEMENT: Create this file at public/emails/event-registration-confirmation.html
-  
-  This is a Handlebars template. The double-brace {{ }} syntax marks
-  variables that get replaced with real data when the email is sent.
-  The template is compiled ONCE at server startup by src/lib/emails.js
-  and reused for every registration email.
-  
-  VARIABLES AVAILABLE:
-    {{ registrant_name }}  - Full name of the registrant
-    {{ event_name }}       - Name of the event
-    {{ event_location }}   - Venue / location string
-    {{ event_date }}       - Formatted start date  e.g. "Wednesday, June 10, 2026"
-    {{ event_time }}       - Formatted time range  e.g. "9:00 AM – 5:00 PM (WAT)"
-    {{ reg_id }}           - Registration ID       e.g. "REG-A3F9KL"
-    {{ year }}             - Current year (for footer copyright)
-    {{ APP_NAME }}         - App name from env
-    {{ OFFICE_ADDRESS }}   - Office address from env
-    {{#if has_responses}}  - Conditional block: only renders if there are custom field answers
-    {{ responses }}        - Array of { label, answer } for the custom field section
--->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 

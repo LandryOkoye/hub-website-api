@@ -151,7 +151,9 @@ dist
 *.rtf
 
 .env
-/.env.example
+
+# Script to make a user an admin
+/src/scripts   
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node
 
