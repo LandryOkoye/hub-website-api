@@ -3,7 +3,7 @@ const logger = require("../config/logger");
 
 const sendMail = require("../config/mail");
 
-const { verifyEmail } = require("../lib/emails");
+const { verifyEmail, eventRegistrationConfirmation } = require("../lib/emails");
 const { InternalServerError } = require("../lib/errors");
 
 

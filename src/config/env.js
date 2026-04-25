@@ -3,8 +3,8 @@ const env = process.env.NODE_ENV || "development";
 
 //common environmental variables for all environments
 const common = {
-  APP_NAME: process.env.APP_NAME || "blockchainhubafrica",
-  OFFICE_ADDRESS: process.env.OFFICE_ADDRESS || "123 anytown Enugu",
+  APP_NAME: process.env.APP_NAME || "Blockchainhub-Africa",
+  OFFICE_ADDRESS: process.env.OFFICE_ADDRESS || "Temple Avenue, Enugu",
   EMAILER: process.env.EMAILER,
   BASE_URL: process.env.BASE_URL,
   NODEMAILER_CONFIG: {
