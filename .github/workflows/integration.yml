@@ -23,5 +23,8 @@ jobs:
       - name: Test application
         run: npm test
 
+      - name: Install PM2
+        run: npm install -g pm2
+        
       - name: Restart server application
         run: pm2 restart server
