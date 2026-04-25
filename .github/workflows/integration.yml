@@ -18,10 +18,16 @@ jobs:
           node-version: "24.x"
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Test application
         run: npm test
+
+      - name: Install PM2
+        run: npm install -g pm2
+
+      - name: Start server application
+        run: pm2 start api/index.js --name server 
 
       - name: Restart server application
         run: pm2 restart server

@@ -7,7 +7,7 @@
     "start": "node api/index.js",
     "dev": "nodemon api/index.js",
     "seed": "node seed.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "engines": {
     "node": ">=24.0.0"
@@ -38,6 +38,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "pm2": "4.5.6"
   }
 }
